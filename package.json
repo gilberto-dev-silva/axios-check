@@ -1,0 +1,17 @@
+{
+  "name": "axios-check",
+  "version": "1.0.0",
+  "description": "Ferramenta para teste de endpoint com axios",
+  "main": "index.js",
+  "scripts": {
+		"dev": "npx tailwindcss -i ./src/css/main.css -o ./public/css/styles.css --watch",
+    "build:css": "npx tailwindcss -i ./src/css/main.css -o ./dist/styles.css --watch"
+  },
+  "author": "Gilberto Silva",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14"
+  }
+}
