@@ -4,6 +4,20 @@ const statusEl = document.getElementById('status');
 const configEl = document.getElementById('config');
 const headersEl = document.getElementById('headers');
 
+axios.interceptors.request.use(function (config) {
+	config.headers.Authorization = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+	config.headers['Content-Type'] = 'application/json';
+	return config;
+}, function (error) {
+	return Promise.reject(error);
+});
+
+axios.interceptors.response.use(function (response) {
+	return response;
+}, function (error) {
+	return Promise.reject(error);
+});
+
 const get = () => {
 	const config = {
 		params: {
