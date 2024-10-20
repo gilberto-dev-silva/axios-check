@@ -82,7 +82,20 @@ const errorHandling = () => {
 }
 
 const cancel = () => {
-    console.log('cancel');
+	const controller = new AbortController();
+	const signal = controller.signal;
+    const config = {
+			params: {
+				_limit: 2
+			},
+			signal
+		}
+		axios.get('https://jsonplaceholder.typicode.com/posts', config)
+		.then((response) => 	renderOutput(response))
+		.catch((error) => {
+			console.log(error.message);
+		})
+		controller.abort();
 }
 
 const clear = () => {
