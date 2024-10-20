@@ -5,15 +5,14 @@ const configEl = document.getElementById('config');
 const headersEl = document.getElementById('headers');
 
 const get = () => {
-	axios.get('https://jsonplaceholder.typicode.com/posts',{
+	const config = {
 		params: {
-			_limit: 5
+			_limit: 2
 		}
-	})
-	.then((response) => {
-		renderOutput(response);
-	})
-}
+	};
+	axios.get('https://jsonplaceholder.typicode.com/posts', config)
+	.then((response) => 	renderOutput(response));
+};
 
 const post = () => {
     console.log('post');
