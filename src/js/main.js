@@ -25,11 +25,21 @@ const post = () => {
 }
 
 const put = () => {
-    console.log('put');
+	const data = {
+		userId: 1,
+		body: 'Teste axios',
+		title: 'Metodo PUT',
+	};
+	axios.put('https://jsonplaceholder.typicode.com/posts/1', data)
+		.then((response) => renderOutput(response));
 }
 
 const patch = () => {
-    console.log('patch');
+		const data = {
+			title: 'Metodo PATCH',
+		}
+		axios.patch('https://jsonplaceholder.typicode.com/posts/1', data)
+		.then((response) => renderOutput(response));
 }
 
 const del = () => {
