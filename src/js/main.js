@@ -68,7 +68,21 @@ const del = () => {
 }
 
 const multiple = () => {
-    console.log('multiple');
+	const config = {
+		params: {
+			_limit: 1
+		}
+	}
+		axios.all([
+			axios.get('/posts', config),
+			axios.get('/users', config)
+		])
+		.then((response) => {
+			console.log(response);
+		})
+		.catch(errors => {
+			renderOutput(errors);
+		})
 }
 
 const transform = () => {
@@ -110,7 +124,7 @@ const cancel = () => {
 		axios.get('/posts', config)
 		.then((response) => 	renderOutput(response))
 		.catch((error) => {
-			console.log(error.message);
+			console.log(error.toJSON());
 		})
 		controller.abort();
 }
