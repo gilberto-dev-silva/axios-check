@@ -74,7 +74,11 @@ const transform = () => {
 }
 
 const errorHandling = () => {
-    console.log('errorHandling');
+	axios.get('https://jsonplaceholder.typicode.com/posts,')
+		.then((response) => renderOutput(response))
+		.catch((error) => {
+			renderOutput(error.toJSON());
+		})
 }
 
 const cancel = () => {
