@@ -15,7 +15,13 @@ const get = () => {
 };
 
 const post = () => {
-    console.log('post');
+  const data = {
+    userId: 1,
+    body: 'Teste axios',
+		title: 'Metodo POST',
+	};
+	axios.post('https://jsonplaceholder.typicode.com/posts', data)
+		.then((response) => 	renderOutput(response));
 }
 
 const put = () => {
