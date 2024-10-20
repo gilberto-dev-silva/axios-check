@@ -43,7 +43,11 @@ const patch = () => {
 }
 
 const del = () => {
-    console.log('delete');
+		const data = {
+			id: 2,
+		}
+		axios.delete(`https://jsonplaceholder.typicode.com/posts/${data.id}`)
+		.then((response) => renderOutput(response));
 }
 
 const multiple = () => {
