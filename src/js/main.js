@@ -4,40 +4,129 @@ const statusEl = document.getElementById('status');
 const configEl = document.getElementById('config');
 const headersEl = document.getElementById('headers');
 
+axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
+axios.defaults.headers.get['Accept'] = 'application/json';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.common['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+
+axios.interceptors.request.use(function (config) {
+	return config;
+}, function (error) {
+	return Promise.reject(error);
+});
+
+axios.interceptors.response.use(function (response) {
+	return response;
+}, function (error) {
+	return Promise.reject(error);
+});
+
 const get = () => {
-	console.log('get');
-}
+	const config = {
+		params: {
+			_limit: 2
+		}
+	};
+	axios.get('/posts', config)
+	.then((response) => 	renderOutput(response));
+};
 
 const post = () => {
-    console.log('post');
+  const data = {
+    userId: 1,
+    body: 'Teste axios',
+		title: 'Metodo POST',
+	};
+	axios.post('/posts', data)
+		.then((response) => 	renderOutput(response));
 }
 
 const put = () => {
-    console.log('put');
+	const data = {
+		userId: 1,
+		body: 'Teste axios',
+		title: 'Metodo PUT',
+	};
+	axios.put('/posts/1', data)
+		.then((response) => renderOutput(response));
 }
 
 const patch = () => {
-    console.log('patch');
+		const data = {
+			title: 'Metodo PATCH',
+		}
+		axios.patch('/posts/1', data)
+		.then((response) => renderOutput(response));
 }
 
 const del = () => {
-    console.log('delete');
+		const data = {
+			id: 2,
+		}
+		axios.delete(`/posts/${data.id}`)
+		.then((response) => renderOutput(response));
 }
 
 const multiple = () => {
-    console.log('multiple');
+	const config = {
+		params: {
+			_limit: 1
+		}
+	}
+		axios.all([
+			axios.get('/posts', config),
+			axios.get('/users', config)
+		])
+		.then((response) => {
+			console.log(response);
+		})
+		.catch(errors => {
+			renderOutput(errors);
+		})
 }
 
 const transform = () => {
-    console.log('transform');
+		const config = {
+			params: {
+				_limit: 2
+			},
+			transformResponse: [function (data) {
+				const payload = JSON.parse(data).map(itm => {
+					return {
+						title: itm.title,
+						is_selected: false
+					}
+				});
+				return payload;
+			}],
+		}
+		axios.get('/posts', config)
+		.then((response) => 	renderOutput(response));
 }
 
 const errorHandling = () => {
-    console.log('errorHandling');
+	axios.get('/posts,')
+		.then((response) => renderOutput(response))
+		.catch((error) => {
+			renderOutput(error.toJSON());
+		})
 }
 
 const cancel = () => {
-    console.log('cancel');
+	const controller = new AbortController();
+	const signal = controller.signal;
+    const config = {
+			params: {
+				_limit: 2
+			},
+			signal
+		}
+		axios.get('/posts', config)
+		.then((response) => 	renderOutput(response))
+		.catch((error) => {
+			console.log(error.toJSON());
+		})
+		controller.abort();
 }
 
 const clear = () => {
