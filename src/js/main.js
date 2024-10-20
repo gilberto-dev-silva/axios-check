@@ -4,9 +4,12 @@ const statusEl = document.getElementById('status');
 const configEl = document.getElementById('config');
 const headersEl = document.getElementById('headers');
 
+axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
+axios.defaults.headers.get['Accept'] = 'application/json';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.common['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+
 axios.interceptors.request.use(function (config) {
-	config.headers.Authorization = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
-	config.headers['Content-Type'] = 'application/json';
 	return config;
 }, function (error) {
 	return Promise.reject(error);
@@ -24,7 +27,7 @@ const get = () => {
 			_limit: 2
 		}
 	};
-	axios.get('https://jsonplaceholder.typicode.com/posts', config)
+	axios.get('/posts', config)
 	.then((response) => 	renderOutput(response));
 };
 
@@ -34,7 +37,7 @@ const post = () => {
     body: 'Teste axios',
 		title: 'Metodo POST',
 	};
-	axios.post('https://jsonplaceholder.typicode.com/posts', data)
+	axios.post('/posts', data)
 		.then((response) => 	renderOutput(response));
 }
 
@@ -44,7 +47,7 @@ const put = () => {
 		body: 'Teste axios',
 		title: 'Metodo PUT',
 	};
-	axios.put('https://jsonplaceholder.typicode.com/posts/1', data)
+	axios.put('/posts/1', data)
 		.then((response) => renderOutput(response));
 }
 
@@ -52,7 +55,7 @@ const patch = () => {
 		const data = {
 			title: 'Metodo PATCH',
 		}
-		axios.patch('https://jsonplaceholder.typicode.com/posts/1', data)
+		axios.patch('/posts/1', data)
 		.then((response) => renderOutput(response));
 }
 
@@ -60,7 +63,7 @@ const del = () => {
 		const data = {
 			id: 2,
 		}
-		axios.delete(`https://jsonplaceholder.typicode.com/posts/${data.id}`)
+		axios.delete(`/posts/${data.id}`)
 		.then((response) => renderOutput(response));
 }
 
@@ -83,12 +86,12 @@ const transform = () => {
 				return payload;
 			}],
 		}
-		axios.get('https://jsonplaceholder.typicode.com/posts', config)
+		axios.get('/posts', config)
 		.then((response) => 	renderOutput(response));
 }
 
 const errorHandling = () => {
-	axios.get('https://jsonplaceholder.typicode.com/posts,')
+	axios.get('/posts,')
 		.then((response) => renderOutput(response))
 		.catch((error) => {
 			renderOutput(error.toJSON());
@@ -104,7 +107,7 @@ const cancel = () => {
 			},
 			signal
 		}
-		axios.get('https://jsonplaceholder.typicode.com/posts', config)
+		axios.get('/posts', config)
 		.then((response) => 	renderOutput(response))
 		.catch((error) => {
 			console.log(error.message);
